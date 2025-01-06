@@ -1,0 +1,203 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Courier New", Courier, monospace;
+    padding: 20px;
+    background-color: #808080;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABdJREFUeNpi+P//fwMDAwMDEwMI AAD//wIAVMYHCUMkklAAAAAASUVORK5CYII=");
+}
+
+.config-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #c0c0c0;
+    border: 2px solid #000;
+    border-radius: 0;
+    box-shadow: inset 1px 1px #dfdfdf, 1px 1px #000;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: navy;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 5px;
+    border: 2px inset #fff;
+    background: #fff;
+    font-size: 16px;
+}
+
+button {
+    background-color: #c0c0c0;
+    color: #000;
+    border: 2px outset #fff;
+    padding: 5px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+button:active {
+    border-style: inset;
+}
+
+.simulation-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: #c0c0c0;
+    border: 2px solid #000;
+    box-shadow: inset 1px 1px #dfdfdf, 1px 1px #000;
+}
+
+.building {
+    position: relative;
+    padding: 20px;
+}
+
+.floors-container {
+    position: relative;
+    z-index: 1;
+}
+
+.floor {
+    height: clamp(80px, 15vh, 120px);
+    min-height: 60px;
+    padding: 5px;
+    border-bottom: 2px solid #808080;
+    background-color: #c0c0c0;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.floor:last-child {
+    border-bottom: none;
+}
+
+.floor-info {
+    width: clamp(80px, 15%, 120px);
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.floor-number {
+    font-weight: bold;
+    color: navy;
+    text-decoration: underline;
+}
+
+.floor-button {
+    background-color: #c0c0c0;
+    border: 2px outset #fff;
+    border-radius: 0;
+}
+
+.floor-button:active {
+    border-style: inset;
+}
+
+.floor-button.active {
+    background-color: #000080;
+    color: #fff;
+}
+
+.lifts-container {
+    position: absolute;
+    top: 20px;
+    left: 140px;
+    right: 20px;
+    bottom: 20px;
+    z-index: 3;
+}
+
+.lift {
+    position: absolute;
+    width: clamp(60px, 8%, 80px);
+    height: calc(clamp(80px, 15vh, 120px) - 10px);
+    min-height: 50px;
+    background-color: #a9a9a9;
+    border: 2px solid #000;
+    transition: transform 0.1s linear;
+}
+
+.lift.moving {
+    background-color: #a9a9a9;
+}
+
+.lift .doors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    overflow: hidden;
+}
+
+.lift .door {
+    width: 50%;
+    height: 100%;
+    background-color: #808080;
+    transition: transform 2.5s ease-in-out;
+}
+
+.lift .door.left {
+    transform-origin: left;
+}
+
+.lift .door.right {
+    transform-origin: right;
+}
+
+.lift.doors-open .door.left {
+    transform: translateX(-100%);
+}
+
+.lift.doors-open .door.right {
+    transform: translateX(100%);
+}
+
+#resetBtn {
+    margin: 4px;
+}
+
+@media screen and (max-width: 768px) {
+    .config-container {
+        max-width: 90%;
+        padding: 10px;
+    }
+    
+    .simulation-container {
+        max-width: 95%;
+        margin: 10px auto;
+    }
+    
+    .floor-number {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .building {
+        padding: 10px;
+    }
+}

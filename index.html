@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lift Simulator</title>
+    <link href="styles/index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div id="configContainer" class="config-container">
+        <div class="input-group">
+            <label for="numFloors">Number of Floors (2-10):</label>
+            <input type="number" id="numFloors" min="2" max="10" value="4">
+        </div>
+        <div class="input-group">
+            <label for="numLifts">Number of Lifts (1-5):</label>
+            <input type="number" id="numLifts" min="1" max="5" value="2">
+        </div>
+        <button id="startBtn">Start Simulation</button>
+    </div>
+
+    <div id="simulationContainer" class="simulation-container" style="display: none;">
+        <div id="building" class="building">
+            <div id="floorsContainer" class="floors-container"></div>
+            <div id="liftsContainer" class="lifts-container"></div>
+        </div>
+       
+        <button id="resetBtn">Reset Simulation</button>
+    </div>
+
+<script src="scripts/main.js" type="module"></script>
+</body>
+</html>
