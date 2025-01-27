@@ -18,10 +18,24 @@ document.getElementById('startBtn').addEventListener('click', () => {
 });
 
 document.getElementById('resetBtn').addEventListener('click', () => {
-    // Reset the application
+    if (liftSystem) {
+        liftSystem.cleanup();
+        liftSystem = null;
+    }
+    
+    // Reset containers
     document.getElementById('configContainer').style.display = 'block';
     document.getElementById('simulationContainer').style.display = 'none';
-    liftSystem = null;
+    
+    // Clear the lifts container
+    const liftsContainer = document.getElementById('liftsContainer');
+    if (liftsContainer) {
+        liftsContainer.innerHTML = '';
+    }
+    
+    // Clear the floors container
+    const floorsContainer = document.getElementById('floorsContainer');
+    if (floorsContainer) {
+        floorsContainer.innerHTML = '';
+    }
 });
-
-

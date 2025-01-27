@@ -5,8 +5,7 @@ export class LiftSystem {
         this.floorHeight = 120; // matches CSS floor height
         this.lifts = [];
         this.requests = new Map(); // floor -> direction
-        this.doorSound = new Audio('assets/door-sound.mp3');
-        this.arrivalSound = new Audio('assets/arrival-ding.mp3');
+        this.activeRequests = new Set();
         this.initialize();
     }
 
@@ -14,16 +13,62 @@ export class LiftSystem {
         this.createBuilding();
         this.createLifts();
         this.startSystem();
+        this.initializeAudio();
     }
 
+    initializeAudio() {
+        this.doorSound = new Audio('assets/door-sound.mp3');
+        this.arrivalSound = new Audio('assets/arrival-ding.mp3');
+        
+        // Set audio properties
+        this.doorSound.preservesPitch = false;
+        this.arrivalSound.preservesPitch = false;
+    }
+    
+    cleanup() {
+        // Stop and cleanup audio
+        if (this.doorSound) {
+            this.doorSound.pause();
+            this.doorSound.currentTime = 0;
+            this.doorSound = null;
+        }
+        if (this.arrivalSound) {
+            this.arrivalSound.pause();
+            this.arrivalSound.currentTime = 0;
+            this.arrivalSound = null;
+        }
+
+        // Clear all intervals and timeouts
+        if (this.systemInterval) {
+            clearInterval(this.systemInterval);
+            this.systemInterval = null;
+        }
+
+        // Clear requests
+        this.requests.clear();
+        this.activeRequests.clear();
+        
+        // Remove lift elements
+        this.lifts.forEach(lift => {
+            if (lift.element && lift.element.parentNode) {
+                lift.element.parentNode.removeChild(lift.element);
+            }
+        });
+        this.lifts = [];
+    }
+    
     playDoorSound() {
-        this.doorSound.currentTime = 0;
-        this.doorSound.play();
+        if (this.doorSound) {
+            this.doorSound.currentTime = 0;
+            this.doorSound.play().catch(err => console.log('Error playing door sound:', err));
+        }
     }
 
     playArrivalSound() {
-        this.arrivalSound.currentTime = 0;
-        this.arrivalSound.play();
+        if (this.arrivalSound) {
+            this.arrivalSound.currentTime = 0;
+            this.arrivalSound.play().catch(err => console.log('Error playing arrival sound:', err));
+        }
     }
     
     createBuilding() {
@@ -83,7 +128,6 @@ export class LiftSystem {
         const liftWidth = 80;
         const spacing = (liftsContainer.clientWidth - (this.numLifts * liftWidth)) / (this.numLifts + 1);
 
-        // Create lifts
         for (let i = 0; i < this.numLifts; i++) {
             const lift = {
                 id: i,
@@ -129,7 +173,7 @@ export class LiftSystem {
 
     addRequest(floor, direction) {
         const key = `${floor}-${direction}`;
-        if (!this.requests.has(key)) {
+        if (!this.requests.has(key) && !this.activeRequests.has(key)) {
             this.requests.set(key, { floor, direction, time: Date.now() });
             this.updateButtons(floor, direction, true);
         }
@@ -154,13 +198,16 @@ export class LiftSystem {
     }
     
     findNearestIdle() {
+        const pendingRequest = this.requests.values().next().value;
+        if (!pendingRequest) return null;
+
         return this.lifts
             .filter(lift => lift.status === 'idle')
             .reduce((nearest, lift) => {
                 if (!nearest) return lift;
-                return Math.abs(lift.currentFloor - this.requests.values().next().value.floor) <
-                       Math.abs(nearest.currentFloor - this.requests.values().next().value.floor)
-                    ? lift : nearest;
+                const currentDistance = Math.abs(lift.currentFloor - pendingRequest.floor);
+                const nearestDistance = Math.abs(nearest.currentFloor - pendingRequest.floor);
+                return currentDistance < nearestDistance ? lift : nearest;
             }, null);
     }
 
@@ -173,10 +220,16 @@ export class LiftSystem {
 
         // Get the oldest request
         const [key, request] = Array.from(this.requests.entries())[0];
+        
+        // Mark this request as being serviced
+        this.activeRequests.add(key);
         this.requests.delete(key);
 
         // Move the lift
         await this.moveLift(idleLift, request.floor);
+        
+        // Remove from active requests after completion
+        this.activeRequests.delete(key);
     }
 
     async moveLift(lift, targetFloor) {
