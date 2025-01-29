@@ -125,8 +125,17 @@ export class LiftSystem {
         const liftsContainer = document.getElementById('liftsContainer');
         liftsContainer.innerHTML = '';
 
+        const minSpacing = 20; 
         const liftWidth = 80;
-        const spacing = (liftsContainer.clientWidth - (this.numLifts * liftWidth)) / (this.numLifts + 1);
+        const containerWidth = Math.max(
+            liftsContainer.clientWidth,
+            (liftWidth + minSpacing) * this.numLifts + minSpacing
+        );
+        const spacing = Math.max(
+            minSpacing,
+            (containerWidth - (this.numLifts * liftWidth)) / (this.numLifts + 1)
+        );
+
 
         for (let i = 0; i < this.numLifts; i++) {
             const lift = {
