@@ -1,202 +1,206 @@
 /* CSS Variables for consistent theming */
 :root {
-    --primary-bg: #c0c0c0;
-    --secondary-bg: #808080;
-    --border-dark: #000;
-    --border-light: #dfdfdf;
-    --text-primary: #000;
-    --text-accent: navy;
-    --lift-color: #a9a9a9;
-    --door-color: #808080;
+  --primary-bg: #c0c0c0;
+  --secondary-bg: #808080;
+  --border-dark: #000;
+  --border-light: #dfdfdf;
+  --text-primary: #000;
+  --text-accent: navy;
+  --lift-color: #a9a9a9;
+  --door-color: #808080;
 }
 
 /* Reset styles */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Base styles */
 body {
-    font-family: "Courier New", Courier, monospace;
-    padding: 20px;
-    background-color: var(--secondary-bg);
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABdJREFUeNpi+P//fwMDAwMDEwMI AAD//wIAVMYHCUMkklAAAAAASUVORK5CYII=");
+  font-family: "Courier New", Courier, monospace;
+  padding: 20px;
+  background-color: var(--secondary-bg);
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABdJREFUeNpi+P//fwMDAwMDEwMI AAD//wIAVMYHCUMkklAAAAAASUVORK5CYII=");
 }
 
 /* Configuration panel styles */
 .config-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: var(--primary-bg);
-    border: 2px solid var(--border-dark);
-    box-shadow: inset 1px 1px var(--border-light), 1px 1px var(--border-dark);
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--primary-bg);
+  border: 2px solid var(--border-dark);
+  box-shadow:
+    inset 1px 1px var(--border-light),
+    1px 1px var(--border-dark);
 }
 
 .input-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: var(--text-accent);
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--text-accent);
 }
 
 .input-group input {
-    width: 100%;
-    padding: 5px;
-    border: 2px inset #fff;
-    background: #fff;
-    font-size: 16px;
+  width: 100%;
+  padding: 5px;
+  border: 2px inset #fff;
+  background: #fff;
+  font-size: 16px;
 }
 
 /* Button styles */
 button {
-    background-color: var(--primary-bg);
-    color: var(--text-primary);
-    border: 2px outset #fff;
-    padding: 5px 20px;
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: border-style 0.1s ease;
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
+  border: 2px outset #fff;
+  padding: 5px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: border-style 0.1s ease;
 }
 
 button:active {
-    border-style: inset;
+  border-style: inset;
 }
 
 /* Simulation container styles */
 .simulation-container {
-    max-width: 1000px;
-    margin: 20px auto;
-    background-color: var(--primary-bg);
-    border: 2px solid var(--border-dark);
-    box-shadow: inset 1px 1px var(--border-light), 1px 1px var(--border-dark);
-    overflow-x: auto;
+  max-width: 1000px;
+  margin: 20px auto;
+  background-color: var(--primary-bg);
+  border: 2px solid var(--border-dark);
+  box-shadow:
+    inset 1px 1px var(--border-light),
+    1px 1px var(--border-dark);
+  overflow-x: auto;
 }
 
 /* Building and floor styles */
 .building {
-    position: relative;
-    padding: 10px;
-    min-width: 800px;
+  position: relative;
+  padding: 10px;
+  min-width: 800px;
 }
 
 .floors-container {
-    position: relative;
-    z-index: 1;
-    width: 900px;
+  position: relative;
+  z-index: 1;
+  width: 900px;
 }
 
 .floor {
-    height: 120px;
-    width: 100%;
-    border-bottom: 2px solid var(--secondary-bg);
-    background-color: var(--primary-bg);
-    display: flex;
-    align-items: center;
-    padding: 10px;
+  height: 120px;
+  width: 100%;
+  border-bottom: 2px solid var(--secondary-bg);
+  background-color: var(--primary-bg);
+  display: flex;
+  align-items: center;
+  padding: 10px;
 }
 
 .floor:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 /* Floor information styles */
 .floor-info {
-    width: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 }
 
 .floor-number {
-    font-weight: bold;
-    color: var(--text-accent);
-    text-decoration: underline;
+  font-weight: bold;
+  color: var(--text-accent);
+  text-decoration: underline;
 }
 
 .floor-button {
-    background-color: var(--primary-bg);
-    border: 2px outset #fff;
+  background-color: var(--primary-bg);
+  border: 2px outset #fff;
 }
 
 .floor-button:active {
-    border-style: inset;
+  border-style: inset;
 }
 
 .floor-button.active {
-    background-color: var(--text-accent);
-    color: #fff;
+  background-color: var(--text-accent);
+  color: #fff;
 }
 
 /* Lift styles */
 .lifts-container {
-    position: absolute;
-    top: 20px;
-    left: 140px;
-    right: 20px;
-    bottom: 20px;
-    z-index: 3;
+  position: absolute;
+  top: 20px;
+  left: 140px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 3;
 }
 
 .lift {
-    position: absolute;
-    width: 80px;
-    height: 110px;
-    background-color: var(--lift-color);
-    border: 2px solid var(--border-dark);
-    transition: transform 0.1s linear;
+  position: absolute;
+  width: 80px;
+  height: 110px;
+  background-color: var(--lift-color);
+  border: 2px solid var(--border-dark);
+  transition: transform 0.1s linear;
 }
 
 .lift .doors {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    overflow: hidden;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  overflow: hidden;
 }
 
 .lift .door {
-    width: 50%;
-    height: 100%;
-    background-color: var(--door-color);
-    transition: transform 2.5s ease-in-out;
+  width: 50%;
+  height: 100%;
+  background-color: var(--door-color);
+  transition: transform 2.5s ease-in-out;
 }
 
 .lift .door.left {
-    transform-origin: left;
+  transform-origin: left;
 }
 
 .lift .door.right {
-    transform-origin: right;
+  transform-origin: right;
 }
 
 .lift.doors-open .door.left {
-    transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 
 .lift.doors-open .door.right {
-    transform: translateX(100%);
+  transform: translateX(100%);
 }
 
 /* Scrollbar styles */
 .simulation-container::-webkit-scrollbar {
-    height: 16px;
-    background: var(--border-light);
-    border: 2px inset #fff;
+  height: 16px;
+  background: var(--border-light);
+  border: 2px inset #fff;
 }
 
 .simulation-container::-webkit-scrollbar-thumb {
-    background: var(--primary-bg);
-    border: 2px outset #fff;
+  background: var(--primary-bg);
+  border: 2px outset #fff;
 }
 
 .simulation-container::-webkit-scrollbar-thumb:active {
-    border-style: inset;
+  border-style: inset;
 }
