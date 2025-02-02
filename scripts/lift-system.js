@@ -131,13 +131,22 @@ export class LiftSystem {
 
     const minSpacing = 20;
     const liftWidth = 80;
-    const containerWidth = Math.max(
-      liftsContainer.clientWidth,
-      (liftWidth + minSpacing) * this.numLifts + minSpacing,
-    );
+   
+    // Calculate required width based on number of lifts
+    const requiredWidth = (liftWidth + minSpacing) * this.numLifts + minSpacing;
+    
+    // Update containers width
+    const building = document.getElementById("building");
+    const floorsContainer = document.getElementById("floorsContainer");
+    const newWidth = Math.max(800, requiredWidth + 160); 
+    
+    building.style.width = `${newWidth}px`;
+    floorsContainer.style.width = `${newWidth}px`;
+    liftsContainer.style.width = `${newWidth - 160}px`;
+
     const spacing = Math.max(
-      minSpacing,
-      (containerWidth - this.numLifts * liftWidth) / (this.numLifts + 1),
+        minSpacing,
+        (requiredWidth - this.numLifts * liftWidth) / (this.numLifts + 1)
     );
 
     for (let i = 0; i < this.numLifts; i++) {
@@ -197,6 +206,7 @@ export class LiftSystem {
     const button = document.querySelector(
       `.floor:nth-child(${floorIndex + 1}) .floor-button.${direction}`,
     );
+
     if (button) {
       if (active) {
         button.classList.add("active");
@@ -243,13 +253,13 @@ export class LiftSystem {
     this.requests.delete(key);
 
     // Move the lift
-    await this.moveLift(idleLift, request.floor);
+    await this.moveLift(idleLift, request.floor, request.direction);
 
     // Remove from active requests after completion
     this.activeRequests.delete(key);
   }
 
-  async moveLift(lift, targetFloor) {
+  async moveLift(lift, targetFloor, direction) {
     // Update lift status
     lift.status = "moving";
     lift.targetFloor = targetFloor;
@@ -275,8 +285,7 @@ export class LiftSystem {
     this.playDoorSound();
     await this.operateDoors(lift, false);
 
-    this.updateButtons(targetFloor, "up", false);
-    this.updateButtons(targetFloor, "down", false);
+    this.updateButtons(targetFloor, direction, false);
 
     lift.targetFloor = null;
     lift.status = "idle";
